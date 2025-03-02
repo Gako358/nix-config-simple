@@ -58,17 +58,11 @@ in {
 
       # Nix
       gc = "nix-collect-garbage";
-      gcd = "sudo nix-collect-garbage -d";
 
       # Locations
       dot = "cd ~/Sources/dotfiles";
       doc = "cd ~/Documents";
-      neovim = "cd ~/Projects/neovim";
-      work = "cd ~/Projects/workspace/";
-      www = "cd ~/Projects/wwwsite/";
 
-      update = "nix flake update";
-      supdate = "sudo nix flake update";
       upgrade = "sudo nixos-rebuild switch --flake";
 
       homeflake = "home-manager switch --flake";

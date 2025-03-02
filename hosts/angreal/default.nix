@@ -3,7 +3,10 @@
     ./hardware-configuration.nix
   ];
 
-  networking.hostName = "angreal";
+  networking = {
+    hostName = "angreal";
+    domain = "math";
+  };
   users.users = {
     matheus = {
       isNormalUser = true;

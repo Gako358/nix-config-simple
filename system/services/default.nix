@@ -1,5 +1,6 @@
 {
   imports = [
+    ./avahi.nix
     ./bluetooth.nix
     ./dbus.nix
     ./gnome.nix
