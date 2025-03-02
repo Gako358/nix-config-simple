@@ -16,6 +16,7 @@ let
       killall # kill processes by name
       lazygit # terminal git ui
       libsecret # secret management
+      libreoffice # office suite
       ncdu # disk space info (a better du)
       nitch # minimal system information fetch
       nix-index # locate packages containing certain nixpkgs
