@@ -5,7 +5,7 @@
       # Forbid root login through SSH.
       settings = {
         PermitRootLogin = "no";
-        PasswordAuthentication = false;
+        PasswordAuthentication = true;
       };
       openFirewall = true;
     };
