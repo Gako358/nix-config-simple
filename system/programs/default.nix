@@ -19,6 +19,7 @@ with lib; {
   imports = [
     ./desktop.nix
     ./fonts.nix
+    ./gaming.nix
     ./shell.nix
   ];
 }
