@@ -70,6 +70,7 @@
                 inherit inputs outputs;
                 hidpi = true;
               };
+              backupFileExtension = ".hm-backup";
               users.matheus = {...}: {
                 nixpkgs.config.allowUnfree = true;
                 imports = [./modules];
