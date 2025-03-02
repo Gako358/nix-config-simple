@@ -64,6 +64,8 @@
           ./hosts/angreal
           {
             home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
               extraSpecialArgs = {
                 inherit inputs outputs;
                 hidpi = true;
