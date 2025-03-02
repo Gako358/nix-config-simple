@@ -21,11 +21,11 @@
       kernelModules = ["amdgpu"];
       luks.devices = {
         cryptroot = {
-          device = "/dev/nvme0n1p3";
+          device = "/dev/sda3";
           preLVM = true;
         };
         cryptswap = {
-          device = "/dev/nvme0n1p2";
+          device = "/dev/sda2";
         };
       };
     };
@@ -45,20 +45,26 @@
     options = ["subvol=home" "noatime" "compress=zstd" "ssd"];
   };
 
+  fileSystems."/nix" = {
+    device = "/dev/mapper/cryptroot";
+    fsType = "btrfs";
+    options = ["subvol=nix" "noatime" "compress=zstd" "ssd"];
+  };
+
+  fileSystems."/var" = {
+    device = "/dev/mapper/cryptroot";
+    fsType = "btrfs";
+    options = ["subvol=var" "noatime" "compress=zstd" "ssd"];
+  };
+
   fileSystems."/tmp" = {
     device = "/dev/mapper/cryptroot";
     fsType = "btrfs";
     options = ["subvol=tmp" "noatime" "compress=zstd" "ssd"];
   };
 
-  fileSystems."/nix" = {
-    device = "/dev/nvme1n1p1";
-    fsType = "btrfs";
-    options = ["noatime" "compress=zstd" "ssd"];
-  };
-
   fileSystems."/boot/efi" = {
-    device = "/dev/nvme0n1p1";
+    device = "/dev/sda1";
     fsType = "vfat";
   };
 

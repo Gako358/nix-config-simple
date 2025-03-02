@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DEVICE_NAME="/dev/nvme0n1"
+DEVICE_NAME="/dev/sda"
 EFI_SIZE="512MiB"
 SWAP_SIZE="9.1GiB"
 LABEL_NAME="NIXOS"
@@ -24,19 +24,19 @@ function create_partitions {
 
 function setup_luks {
     # Encrypt the root partition
-    cryptsetup --verify-passphrase -v luksFormat "${DEVICE_NAME}p3"
-    cryptsetup open "${DEVICE_NAME}p3" "${CRYPTROOT_NAME}"
+    cryptsetup --verify-passphrase -v luksFormat "${DEVICE_NAME}3"
+    cryptsetup open "${DEVICE_NAME}3" "${CRYPTROOT_NAME}"
 
     # Encrypt the swap partition
-    cryptsetup --verify-passphrase -v luksFormat "${DEVICE_NAME}p2"
-    cryptsetup open "${DEVICE_NAME}p2" "${CRYPTSWAP_NAME}"
+    cryptsetup --verify-passphrase -v luksFormat "${DEVICE_NAME}2"
+    cryptsetup open "${DEVICE_NAME}2" "${CRYPTSWAP_NAME}"
 
     echo "LUKS setup completed"
 }
 
 function mount_partitions {
     # Format Partitions
-    mkfs.fat -F32 -n EFI "${DEVICE_NAME}p1"
+    mkfs.fat -F32 -n EFI "${DEVICE_NAME}1"
     mkswap -L SWAP "/dev/mapper/${CRYPTSWAP_NAME}"
     mkfs.btrfs -L "${LABEL_NAME}" -f "/dev/mapper/${CRYPTROOT_NAME}"
 
@@ -60,13 +60,12 @@ function mount_partitions {
     mount -o noatime,compress=zstd,ssd,space_cache=v2,subvol=var "/dev/mapper/${CRYPTROOT_NAME}" /mnt/var
     mount -o noatime,compress=zstd,ssd,space_cache=v2,subvol=tmp "/dev/mapper/${CRYPTROOT_NAME}" /mnt/tmp
 
-    mount "${DEVICE_NAME}p1" /mnt/boot/efi
+    mount "${DEVICE_NAME}1" /mnt/boot/efi
     swapon "/dev/mapper/${CRYPTSWAP_NAME}"
 
     clear
     df -Th
     free -h
-    echo "Run: nixos-install --flake .#tuathaan"
 }
 
 create_partitions
